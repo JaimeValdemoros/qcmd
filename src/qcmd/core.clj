@@ -21,7 +21,7 @@
                                     execution (.exec (Runtime/getRuntime) command-string)
                                     handle (BufferedReader. (InputStreamReader. (.getInputStream execution)))]
                                 (print "Running commmand:" command)
-                                (if (empty? args) (println) (println " with additional args" (vec args)))
+                                (if args (println " with additional args" (vec args)) (println))
                                 (run! println (line-seq handle))
                                 (shutdown-agents)
                                 ))
