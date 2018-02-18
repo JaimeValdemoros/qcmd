@@ -1,9 +1,10 @@
 (ns qcmd.core
-  (:require [clojure.data.json :as json])
-  (:require [clojure.java.io :as io])
-  (:use [clojure.string :only [join]])
+  (:require [clojure.data.json :as json]
+            [clojure.java.io :as io]
+            [clojure.string :as str :only [join]])
   (:import java.lang.Runtime
-           (java.io BufferedReader InputStreamReader)))
+           (java.io BufferedReader InputStreamReader))
+  (:gen-class))
 
 (def help "HOW-TO: Choose between run, add and delete")
 
@@ -16,7 +17,7 @@
 (defn write-config! [progs] (io/make-parents config-location) (spit config-location (json/write-str progs)))
 
 (defn run-command [name args] (let [command ((read-config) name)
-                                    ^String command-string (join " " (into command args))
+                                    ^String command-string (str/join " " (into command args))
                                     execution (.exec (Runtime/getRuntime) command-string)
                                     handle (BufferedReader. (InputStreamReader. (.getInputStream execution)))]
                                 (print "Running commmand:" command)
@@ -37,7 +38,7 @@
                        new-config (dissoc old-config name)]
                    (write-config! new-config)))
 
-(defn list-cmds [] (run! #(println (first %) ":" (clojure.string/join " " (second %))) (seq (read-config))))
+(defn list-cmds [] (run! #(println (first %) ":" (str/join " " (second %))) (seq (read-config))))
 
 (defn -main [& args] (case (first args)
                        ; Print the matching string from the default-progs dictionary
