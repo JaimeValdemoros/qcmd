@@ -2,6 +2,7 @@
   (:require [clojure.data.json :as json]
             [clojure.java.io :as io]
             [clojure.string :as str])
+  (:use [clojure.core.match :only (match)])
   (:import java.lang.Runtime
            (java.io BufferedReader InputStreamReader))
   (:gen-class))
@@ -26,9 +27,11 @@
                                 (shutdown-agents)
                                 ))
 
-(defn run [args] (case (second args)
-                        "--" (run-command (first args) (rest (rest args)))
-                        (run! #(run-command % []) args)))
+(defn run [args] (match (vec args)
+  ; cmd -- args
+  [name (_ :guard (partial = "--")) & params] (run-command name params)
+  ; cmd1 cmd2 cmd3 ..
+  (:else (run! #(run-command % []) args))))
 
 (defn add [name command] (let [old-config (read-config)
                                new-config (conj old-config [name command])]
