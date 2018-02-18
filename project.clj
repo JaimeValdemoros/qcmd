@@ -3,4 +3,6 @@
   :url "https://github.com/JaimeValdemoros/qcmd"
   :license {:name "MIT License"
             :url "https://opensource.org/licenses/MIT"}
-  :dependencies [[org.clojure/clojure "1.8.0"]])
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/data.json "0.2.6"]]
+  :main qcmd.core)
