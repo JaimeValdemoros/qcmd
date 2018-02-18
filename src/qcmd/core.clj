@@ -1,7 +1,7 @@
 (ns qcmd.core
   (:require [clojure.data.json :as json]
             [clojure.java.io :as io]
-            [clojure.string :as str :only [join]])
+            [clojure.string :as str])
   (:import java.lang.Runtime
            (java.io BufferedReader InputStreamReader))
   (:gen-class))
@@ -38,7 +38,7 @@
                        new-config (dissoc old-config name)]
                    (write-config! new-config)))
 
-(defn list-cmds [] (run! #(println (first %) ":" (str/join " " (second %))) (seq (read-config))))
+(defn list-cmds [] (run! (fn [[k v]] (println k ":" (str/join " " v))) (seq (read-config))))
 
 (defn -main [& args] (case (first args)
                        ; Print the matching string from the default-progs dictionary
