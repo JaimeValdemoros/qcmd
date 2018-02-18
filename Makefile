@@ -1,9 +1,9 @@
 lein = docker run -it --rm -v $(shell pwd):/usr/src/app:Z -w /usr/src/app clojure:lein-2.8.1-alpine lein
 
-target/qcmd-0.1.0-SNAPSHOT-standalone.jar: project.clj src/qcmd/core.clj
+target/qcmd-%-standalone.jar: project.clj src/qcmd/core.clj
 	$(lein) uberjar
 
-main: target/qcmd-0.1.0-SNAPSHOT-standalone.jar
+main: target/qcmd-0.1.0-standalone.jar
 
 check:
 	$(lein) check

@@ -1,4 +1,4 @@
-(defproject qcmd "0.1.0-SNAPSHOT"
+(defproject qcmd "0.1.0"
   :description "Simple tool for storing terminal commands"
   :url "https://github.com/JaimeValdemoros/qcmd"
   :license {:name "MIT License"
